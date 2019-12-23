@@ -1,0 +1,122 @@
+        -:    0:Source:FieldObject.h
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include"stdio.h"
+        -:    2:#include"stdbool.h"
+        -:    3:#include <unistd.h>
+        -:    4:#include<time.h>
+        -:    5:#include <stdlib.h>
+        -:    6:
+        -:    7:typedef long long int ll;
+        -:    8:
+        -:    9:const int RESET = 0;
+        -:   10:const int OBJ1 = 1;
+        -:   11:const int OBJ2 = 2;
+        -:   12:const int OBJUP = 3;
+        -:   13:const int OBJDOWN = 4;
+        -:   14:
+        -:   15:
+        -:   16:int Field_State = -1;
+        -:   17:int Control_State = -1;
+        -:   18:
+        -:   19:ll clkReset;
+        -:   20:ll clkSync;
+        -:   21:ll tRTMax;
+        -:   22:ll tSync;
+        -:   23:ll reset_duration;
+        -:   24:ll Sync_duration;
+        -:   25:
+        -:   26:
+function reset_time called 63 returned 100% blocks executed 100%
+       63:   27:void reset_time(ll *a, ll *b, ll *c){
+       63:   28:	ll now = (ll) time(NULL);
+call    0 returned 63
+       63:   29:	*a = (ll) now;
+       63:   30:	*b = *a + *c;
+       63:   31:}
+        -:   32:
+        -:   33:
+function field_obj called 45 returned 100% blocks executed 86%
+       45:   34:int field_obj(int input_for_field_object, int time_for_sync, int time_for_reset, int i){
+        -:   35:
+       45:   36:	clkReset = (ll) time(NULL);
+call    0 returned 45
+       45:   37:	clkSync =  (ll) time(NULL);
+call    0 returned 45
+        -:   38:
+       45:   39:	reset_duration = time_for_reset;
+       45:   40:	Sync_duration  = time_for_sync;
+        -:   41:	
+       45:   42:	if(i == 0){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 44
+        1:   43:		clkSync--;
+        1:   44:		clkReset--;
+        1:   45:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 returned 1
+        1:   46:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 returned 1
+        1:   47:		clkSync++;
+        1:   48:		clkReset++;
+        -:   49:	}
+        -:   50:	
+       45:   51:	if(clkReset >= tRTMax){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 44
+        1:   52:		Field_State = RESET;
+        1:   53:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 returned 1
+        1:   54:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 returned 1
+        -:   55:	}
+       44:   56:	else if(input_for_field_object == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 44
+    #####:   57:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 never executed
+    #####:   58:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 never executed
+    #####:   59:		return -1;
+        -:   60:	}
+       44:   61:	else if(input_for_field_object == OBJ2 || input_for_field_object == OBJDOWN){
+branch  0 taken 40 (fallthrough)
+branch  1 taken 4
+branch  2 taken 32 (fallthrough)
+branch  3 taken 8
+       36:   62:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 returned 36
+       54:   63:		if(clkSync >= tSync){
+branch  0 taken 18 (fallthrough)
+branch  1 taken 18
+       18:   64:			Field_State = OBJUP;
+       18:   65:			reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 returned 18
+        -:   66:		}
+        -:   67:		else{
+       18:   68:			return -1;
+        -:   69:		}
+        -:   70:	}
+        8:   71:	else if(clkSync >= tSync){
+branch  0 taken 3 (fallthrough)
+branch  1 taken 5
+        3:   72:		if(Control_State == OBJ2 || Control_State == OBJDOWN){
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+branch  2 taken 0 (fallthrough)
+branch  3 taken 3
+    #####:   73:			Field_State = OBJUP;
+        -:   74:		}
+        -:   75:		else{
+        3:   76:			Field_State = OBJ1;
+        -:   77:		}
+        3:   78:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 returned 3
+        -:   79:	}
+        -:   80:	else{
+        5:   81:		return -1;
+        -:   82:	}
+        -:   83:	
+       22:   84:	return Field_State;
+        -:   85:} 
