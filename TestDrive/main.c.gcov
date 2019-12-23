@@ -1,0 +1,118 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include"stdio.h"
+        -:    2:#include"stdbool.h"
+        -:    3:#include <unistd.h>
+        -:    4:#include<time.h>
+        -:    5:#include <stdlib.h>
+        -:    6:#include"FieldObject.h"
+        -:    7:
+        -:    8:typedef long long int ll;
+        -:    9:
+        -:   10:
+function main called 1 returned 100% blocks executed 95%
+        1:   11:int main(){
+        -:   12:	
+        1:   13:	int field_message, control_message = -1, i;
+        1:   14:	ll r_duration = 4, sync_duration = 2, begin_time;
+        -:   15:	ll clkReset, clkSync, tRTMax, tSync;
+        -:   16:	bool no_signal;
+        -:   17:	
+        1:   18:	clkReset = (ll) time(NULL);
+call    0 returned 1
+        1:   19:	clkSync = (ll) time(NULL);
+call    0 returned 1
+        1:   20:	begin_time = (ll) time(NULL);
+call    0 returned 1
+        -:   21:	
+        1:   22:	reset_time(&clkReset, &tRTMax, &r_duration);
+call    0 returned 1
+        1:   23:	reset_time(&clkSync, &tSync, &sync_duration);
+call    0 returned 1
+        -:   24:	
+       46:   25:	for(i = 0 ; i < 45; i++){
+branch  0 taken 45
+branch  1 taken 1 (fallthrough)
+       45:   26:		field_message = field_obj(control_message, sync_duration , r_duration, i);
+call    0 returned 45
+        -:   27:		
+       45:   28:		ll sec = (ll) time(0) - begin_time;
+call    0 returned 45
+       45:   29:		no_signal = false;
+        -:   30:		
+       45:   31:		if(field_message == OBJ1){
+branch  0 taken 3 (fallthrough)
+branch  1 taken 42
+        3:   32:			printf("%ld th second: \t" , sec);
+call    0 returned 3
+        3:   33:			printf("Connecting... 'OBJ1' is sent by the Field Object to the Control Object \n");
+call    0 returned 3
+        3:   34:			control_message = OBJ2;
+        -:   35:		}
+       42:   36:		else if(field_message == OBJUP){
+branch  0 taken 18 (fallthrough)
+branch  1 taken 24
+       18:   37:			printf("%ld th second: \t" , sec);
+call    0 returned 18
+       18:   38:			printf("Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object \n");
+call    0 returned 18
+       18:   39:			control_message = OBJDOWN;
+        -:   40:		}
+       24:   41:		else if(field_message == RESET){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 23
+        1:   42:			printf("%ld th second: \t" , sec);
+call    0 returned 1
+        1:   43:			printf("Restarting... Connection is resetted by the Field Object \n");
+call    0 returned 1
+        1:   44:			control_message = -1;
+        -:   45:		}
+        -:   46:		else{
+       23:   47:			no_signal = true;
+        -:   48:		}
+        -:   49:
+        -:   50:		
+       45:   51:		if(i >=20 && i<=23){
+branch  0 taken 25 (fallthrough)
+branch  1 taken 20
+branch  2 taken 4 (fallthrough)
+branch  3 taken 21
+        4:   52:			control_message = -1;
+        -:   53:		}
+       41:   54:		else if(no_signal){
+branch  0 taken 20 (fallthrough)
+branch  1 taken 21
+        -:   55:		// do nothing
+        -:   56:		}		
+       20:   57:		else if(control_message == OBJ2){
+branch  0 taken 2 (fallthrough)
+branch  1 taken 18
+        2:   58:			printf("%ld th second: \t" , sec);
+call    0 returned 2
+        2:   59:			printf("Connected... 'OBJ2' message is sent by the Control Object to the Field Object \n");
+call    0 returned 2
+        -:   60:		}
+       18:   61:		else if(control_message == OBJDOWN){
+branch  0 taken 17 (fallthrough)
+branch  1 taken 1
+       17:   62:			printf("%ld th second: \t" , sec);
+call    0 returned 17
+       17:   63:			printf("Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object \n");
+call    0 returned 17
+        -:   64:		}
+        1:   65:		else if(control_message == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:   66:			printf("%ld th second: \t" , sec);
+call    0 never executed
+    #####:   67:			printf("Restarting... Connection is resetted by the Field Object \n");
+call    0 never executed
+        -:   68:		}
+       45:   69:		sleep(1);
+call    0 returned 45
+        -:   70:	}
+        -:   71:	
+        -:   72:}
