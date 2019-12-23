@@ -1,0 +1,48 @@
+2 th second:    Connecting... 'OBJ1' is sent by the Field Object to the Control Object
+2 th second:    Connected... 'OBJ2' message is sent by the Control Object to the Field Object
+4 th second:    Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+4 th second:    Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+6 th second:    Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+6 th second:    Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+8 th second:    Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+8 th second:    Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+10 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+10 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+12 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+12 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+14 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+14 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+16 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+16 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+18 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+18 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+20 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+20 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+22 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+22 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+24 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+24 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+26 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+26 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+28 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+28 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+30 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+30 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+32 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+32 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+34 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+34 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+36 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+36 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+38 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+38 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+40 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+40 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+42 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+42 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+44 th second:   Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object
+44 th second:   Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object
+
+--------------------------------
+Process exited after 45.18 seconds with return value 0
+Press any key to continue . . .
