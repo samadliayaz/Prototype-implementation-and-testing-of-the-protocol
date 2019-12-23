@@ -1,0 +1,254 @@
+        -:    0:Source:scheduler.c
+        -:    0:Graph:scheduler.gcno
+        -:    0:Data:scheduler.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include"stdio.h"
+        -:    2:#include"stdbool.h"
+        -:    3:#include <unistd.h>
+        -:    4:#include<time.h>
+        -:    5:#include <stdlib.h>
+        -:    6:
+        -:    7:typedef long long int ll;
+        -:    8:
+        -:    9:const int RESET = 0;
+        -:   10:const int OBJ1 = 1;
+        -:   11:const int OBJ2 = 2;
+        -:   12:const int OBJUP = 3;
+        -:   13:const int OBJDOWN = 4;
+        -:   14:
+        -:   15:
+        -:   16:int Field_State = -1;
+        -:   17:int Control_State = -1;
+        -:   18:
+        -:   19:ll clkReset;
+        -:   20:ll clkSync;
+        -:   21:ll tRTMax;
+        -:   22:ll tSync;
+        -:   23:ll reset_duration;
+        -:   24:ll Sync_duration;
+        -:   25:
+        -:   26:ll clkReset_Controller;
+        -:   27:ll tRTMax_Controller;
+        -:   28:ll reset_duration_Controller;
+        -:   29:
+        -:   30:
+function reset_time called 68 returned 100% blocks executed 100%
+       68:   31:void reset_time(ll *a, ll *b, ll *c){
+       68:   32:	ll now = (ll) time(NULL);
+call    0 returned 68
+       68:   33:	*a = (ll) now;
+       68:   34:	*b = *a + *c;
+       68:   35:}
+        -:   36:
+        -:   37:
+function field_obj called 45 returned 100% blocks executed 72%
+       45:   38:int field_obj(int input_for_field_object, int time_for_sync, int time_for_reset)
+        -:   39:
+        -:   40:{
+       45:   41:	clkReset = (ll) time(NULL);
+call    0 returned 45
+       45:   42:	clkSync =  (ll) time(NULL);
+call    0 returned 45
+        -:   43:
+       45:   44:	reset_duration = time_for_reset;
+       45:   45:	Sync_duration  = time_for_sync;
+        -:   46:	
+       45:   47:	if(clkReset >= tRTMax){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 45
+    #####:   48:		Field_State = RESET;
+    #####:   49:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 never executed
+    #####:   50:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 never executed
+        -:   51:	}
+        -:   52:	
+       45:   53:	else if(input_for_field_object == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 45
+    #####:   54:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 never executed
+    #####:   55:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 never executed
+    #####:   56:		return -1;
+        -:   57:	}
+        -:   58:	
+       45:   59:	else if(input_for_field_object == OBJ2 || input_for_field_object == OBJDOWN){
+branch  0 taken 44 (fallthrough)
+branch  1 taken 1
+branch  2 taken 20 (fallthrough)
+branch  3 taken 24
+       21:   60:		reset_time(&clkReset, &tRTMax, &reset_duration);
+call    0 returned 21
+      21*:   61:		if(clkSync >= tSync){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 21
+    #####:   62:			Field_State = OBJUP;
+    #####:   63:			reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 never executed
+        -:   64:		}
+        -:   65:		else{
+       21:   66:			return -1;
+        -:   67:		}
+        -:   68:	}
+        -:   69:	
+       24:   70:	else if(clkSync >= tSync){
+branch  0 taken 22 (fallthrough)
+branch  1 taken 2
+       22:   71:		if(Control_State == OBJ2 || Control_State == OBJDOWN){
+branch  0 taken 21 (fallthrough)
+branch  1 taken 1
+branch  2 taken 20 (fallthrough)
+branch  3 taken 1
+       21:   72:			Field_State = OBJUP;
+        -:   73:		}
+        -:   74:		else{
+        1:   75:			Field_State = OBJ1;
+        -:   76:		}
+       22:   77:		reset_time(&clkSync, &tSync, &Sync_duration);
+call    0 returned 22
+        -:   78:	}
+        -:   79:	
+        -:   80:	else{
+        2:   81:		return -1;
+        -:   82:	}
+        -:   83:	
+       22:   84:	return Field_State;
+        -:   85:} 
+        -:   86:
+function control_obj called 45 returned 100% blocks executed 71%
+       45:   87:int control_obj(int input_for_control_object, ll time_for_reset){
+        -:   88:	
+       45:   89:	reset_duration_Controller = time_for_reset;
+       45:   90:	clkReset_Controller = (ll) time(NULL);
+call    0 returned 45
+        -:   91:	
+       45:   92:	if(clkReset_Controller >= tRTMax_Controller){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 45
+    #####:   93:		reset_time(&clkReset_Controller, &tRTMax_Controller, &reset_duration_Controller);
+call    0 never executed
+    #####:   94:		Control_State = RESET;
+        -:   95:	}
+        -:   96:	
+       45:   97:	else if(input_for_control_object == OBJ1){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 44
+        1:   98:		Control_State = OBJ2;
+        1:   99:		reset_time(&clkReset_Controller, &tRTMax_Controller, &reset_duration_Controller);
+call    0 returned 1
+        -:  100:	}
+        -:  101:	
+       44:  102:	else if(input_for_control_object == OBJUP){
+branch  0 taken 21 (fallthrough)
+branch  1 taken 23
+       21:  103:		Control_State = OBJDOWN;
+       21:  104:		reset_time(&clkReset_Controller, &tRTMax_Controller, &reset_duration_Controller);
+call    0 returned 21
+        -:  105:	}
+        -:  106:	
+       23:  107:	else if(input_for_control_object == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+    #####:  108:		reset_time(&clkReset_Controller, &tRTMax_Controller, &reset_duration_Controller);
+call    0 never executed
+    #####:  109:		return -1;
+        -:  110:	}
+        -:  111:	
+        -:  112:	else{
+       23:  113:		return -1;
+        -:  114:	}
+        -:  115:	
+       22:  116:	return Control_State;
+        -:  117:}
+        -:  118:
+        -:  119:
+function main called 1 returned 100% blocks executed 88%
+        1:  120:int main(){
+        -:  121:	
+        1:  122:	int field_message, control_message = -1, i;
+        1:  123:	ll r_duration = 12, r_c_duration = 12, sync_duration = 2, begin_time;
+        -:  124:	
+        1:  125:	clkReset = (ll) time(NULL);
+call    0 returned 1
+        1:  126:	clkSync = (ll) time(NULL);
+call    0 returned 1
+        1:  127:	begin_time = (ll) time(NULL);
+call    0 returned 1
+        -:  128:	
+        1:  129:	reset_time(&clkReset, &tRTMax, &r_duration);
+call    0 returned 1
+        1:  130:	reset_time(&clkSync, &tSync, &sync_duration);
+call    0 returned 1
+        1:  131:	reset_time(&clkReset_Controller, &tRTMax_Controller, &r_c_duration);
+call    0 returned 1
+        -:  132:	
+       46:  133:	for(i = 0 ; i < 45; i++){
+branch  0 taken 45
+branch  1 taken 1 (fallthrough)
+        -:  134:	
+       45:  135:		field_message = field_obj(control_message, sync_duration , r_duration);
+call    0 returned 45
+        -:  136:		
+       45:  137:		ll sec = (ll) time(0) - begin_time;
+call    0 returned 45
+        -:  138:		
+       45:  139:		if(field_message == OBJ1){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 44
+        1:  140:			printf("%ld th second: \t" , sec);
+call    0 returned 1
+        1:  141:			printf("Connecting... 'OBJ1' is sent by the Field Object to the Control Object \n");
+call    0 returned 1
+        -:  142:		}
+       44:  143:		else if(field_message == OBJUP){
+branch  0 taken 21 (fallthrough)
+branch  1 taken 23
+       21:  144:			printf("%ld th second: \t" , sec);
+call    0 returned 21
+       21:  145:			printf("Data Transfering... 'OBJUP' message is sent by the Field Object to the Control Object \n");
+call    0 returned 21
+        -:  146:		}
+       23:  147:		else if(field_message == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+    #####:  148:			printf("%ld th second: \t" , sec);
+call    0 never executed
+    #####:  149:			printf("Restarting... Connection is resetted by the Field Object \n");
+call    0 never executed
+        -:  150:		}
+        -:  151:
+        -:  152:		
+       45:  153:		control_message = control_obj(field_message, r_c_duration);
+call    0 returned 45
+        -:  154:		
+       45:  155:		if(control_message == OBJ2){
+branch  0 taken 1 (fallthrough)
+branch  1 taken 44
+        1:  156:			printf("%ld th second: \t" , sec);
+call    0 returned 1
+        1:  157:			printf("Connected... 'OBJ2' message is sent by the Control Object to the Field Object \n");
+call    0 returned 1
+        -:  158:		}
+       44:  159:		else if(control_message == OBJDOWN){
+branch  0 taken 21 (fallthrough)
+branch  1 taken 23
+       21:  160:			printf("%ld th second: \t" , sec);
+call    0 returned 21
+       21:  161:			printf("Data Transfering... 'OBJDOWN' message is sent by the Control Object to the Field Object \n");
+call    0 returned 21
+        -:  162:		}
+       23:  163:		else if(control_message == RESET){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 23
+    #####:  164:			printf("%ld th second: \t" , sec);
+call    0 never executed
+    #####:  165:			printf("Restarting... Connection is resetted by the Field Object \n");
+call    0 never executed
+        -:  166:		}
+       45:  167:		sleep(1);
+call    0 returned 45
+        -:  168:	}
+        -:  169:	
+        -:  170:}
